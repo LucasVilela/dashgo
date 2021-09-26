@@ -21,7 +21,7 @@ const signInFormSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required").min(6, "Password must be at least 6 characters"),
   password_confirmation: yup.string().oneOf([yup.ref("password"), null], "Passwords must match"),
-});
+}).required();
 
 export default function UserList() {
 

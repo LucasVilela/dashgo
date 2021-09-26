@@ -12,7 +12,7 @@ type SignInFormData = {
 const signInFormSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required"),
-});
+}).required();
 
 export default function SignIn() {
   const {
@@ -20,7 +20,7 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: yupResolver(signInFormSchema),
+    resolver: yupResolver(signInFormSchema)
   });
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
@@ -31,8 +31,8 @@ export default function SignIn() {
     <Flex w="100" h="100vh" align="center" justify="center">
       <Flex as="form" width="100%" maxWidth={360} bg="gray.800" p="8" borderRadius="8" flexDirection="column" onSubmit={handleSubmit(handleSignIn)}>
         <Stack spacing="4">
-          <Input type="email" name="email" label="Email" error={errors.email} register={register} />
-          <Input type="password" name="password" label="Password" error={errors.password} register={register} />
+          <Input type="email" name="email" label="Email" error={errors.email} {...register("email")} />
+          <Input type="password" name="password" label="Password" error={errors.password} {...register("password")} />
         </Stack>
         <Button type="submit" colorScheme="yellow" mt="6" size="lg" isLoading={isSubmitting}>
           Enter
