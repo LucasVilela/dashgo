@@ -24,7 +24,7 @@ const signInFormSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required").min(6, "Password must be at least 6 characters"),
-  password_confirmation: yup.string().oneOf([yup.ref("password"), null], "Passwords must match"),
+  password_confirmation: yup.string().required().oneOf([yup.ref("password"), null], "Passwords must match"),
 }).required();
 
 export default function UserList() {
@@ -45,7 +45,9 @@ export default function UserList() {
     }
   })
 
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(signInFormSchema)
+  })
 
   const errors = formState.errors
 
